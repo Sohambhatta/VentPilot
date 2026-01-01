@@ -72,6 +72,56 @@
             100% { transform: translate(50px, 50px); }
         }
 
+        /* Additional animated background layers */
+        body::after {
+            animation: diagonalMove 30s linear infinite, pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Floating orbs background effect */
+        @keyframes floatOrb {
+            0%, 100% { 
+                transform: translate(0, 0) scale(1);
+                opacity: 0.4;
+            }
+            50% { 
+                transform: translate(30px, -30px) scale(1.1);
+                opacity: 0.7;
+            }
+        }
+
+        section::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 206, 209, 0.15), transparent);
+            border-radius: 50%;
+            top: 10%;
+            right: 5%;
+            animation: floatOrb 15s ease-in-out infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        section::after {
+            content: '';
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(127, 255, 0, 0.1), transparent);
+            border-radius: 50%;
+            bottom: 15%;
+            left: 8%;
+            animation: floatOrb 18s ease-in-out infinite reverse;
+            pointer-events: none;
+            z-index: -1;
+        }
+
         /* ===== NAVIGATION BAR ===== */
         nav {
             position: fixed;
@@ -610,6 +660,17 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
         }
 
+        .diagram-container.smaller-diagram {
+            max-width: 800px;
+            padding: 1.5rem;
+        }
+
+        .diagram-container.smaller-diagram img {
+            width: 90%;
+            margin: 0 auto;
+            display: block;
+        }
+
         .diagram-caption {
             text-align: center;
             margin-top: 1.5rem;
@@ -709,6 +770,301 @@
             font-size: 1.05rem;
             color: #ADD8E6;
             line-height: 1.7;
+        }
+
+        /* ===== PRICING/SUBSCRIPTION SECTION ===== */
+        .pricing-intro {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 4rem;
+        }
+
+        .pricing-intro h3 {
+            font-size: 2.5rem;
+            color: #7FFF00;
+            margin-bottom: 1rem;
+            font-family: 'Impact', sans-serif;
+            letter-spacing: 2px;
+        }
+
+        .pricing-intro p {
+            font-size: 1.3rem;
+            color: #ADD8E6;
+            line-height: 1.6;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .pricing-card {
+            background: rgba(0, 31, 63, 0.8);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 3px solid transparent;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #87CEEB, #00CED1, #7FFF00);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .pricing-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-15px);
+            border-color: #00CED1;
+            box-shadow: 0 20px 60px rgba(0, 206, 209, 0.4);
+        }
+
+        .pricing-card.popular {
+            border-color: #7FFF00;
+            box-shadow: 0 10px 40px rgba(127, 255, 0, 0.3);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: #7FFF00;
+            color: #001f3f;
+            padding: 0.5rem 2.5rem;
+            font-size: 0.85rem;
+            font-weight: bold;
+            transform: rotate(45deg);
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .plan-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(0, 206, 209, 0.3);
+        }
+
+        .plan-name {
+            font-size: 2rem;
+            color: #00CED1;
+            margin-bottom: 0.5rem;
+            font-family: 'Impact', sans-serif;
+            letter-spacing: 2px;
+        }
+
+        .plan-tagline {
+            font-size: 1.1rem;
+            color: #FFB347;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .plan-description {
+            font-size: 1rem;
+            color: #ADD8E6;
+            line-height: 1.6;
+        }
+
+        .plan-price {
+            font-size: 2.5rem;
+            color: #7FFF00;
+            font-weight: bold;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
+        .plan-price .period {
+            font-size: 1.1rem;
+            color: #87CEEB;
+            font-weight: normal;
+        }
+
+        .plan-details {
+            margin: 2rem 0;
+        }
+
+        .plan-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-section h4 {
+            font-size: 1.2rem;
+            color: #00CED1;
+            margin-bottom: 0.8rem;
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        .plan-section p,
+        .plan-section ul {
+            font-size: 1rem;
+            color: #ADD8E6;
+            line-height: 1.7;
+        }
+
+        .plan-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .plan-section ul li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .plan-section ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #7FFF00;
+            font-weight: bold;
+        }
+
+        .plan-section ul li strong {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            font-family: 'Arial', sans-serif;
+            color: #87CEEB;
+        }
+
+        .plan-cta {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            background: linear-gradient(135deg, #00CED1, #87CEEB);
+            color: #001f3f;
+            text-align: center;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            border: 2px solid transparent;
+        }
+
+        .plan-cta:hover {
+            background: linear-gradient(135deg, #7FFF00, #00CED1);
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 206, 209, 0.5);
+        }
+
+        /* ===== COMPARISON CHART ===== */
+        .comparison-section {
+            margin: 4rem 0;
+            background: rgba(0, 31, 63, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+        }
+
+        .comparison-title {
+            font-size: 2.5rem;
+            text-align: center;
+            color: #00CED1;
+            margin-bottom: 2rem;
+            font-family: 'Impact', sans-serif;
+            letter-spacing: 2px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #003366, #0080c8);
+        }
+
+        .comparison-table th {
+            padding: 1.5rem 1rem;
+            text-align: center;
+            color: #7FFF00;
+            font-size: 1.3rem;
+            font-family: 'Impact', sans-serif;
+            letter-spacing: 1.5px;
+            border-bottom: 3px solid #00CED1;
+        }
+
+        .comparison-table tbody tr {
+            background: rgba(0, 51, 102, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .comparison-table tbody tr:nth-child(even) {
+            background: rgba(0, 51, 102, 0.6);
+        }
+
+        .comparison-table tbody tr:hover {
+            background: rgba(0, 128, 200, 0.5);
+            transform: scale(1.02);
+        }
+
+        .comparison-table td {
+            padding: 1.2rem 1rem;
+            text-align: center;
+            color: #ADD8E6;
+            font-size: 1.1rem;
+            border-bottom: 1px solid rgba(0, 206, 209, 0.2);
+        }
+
+        .comparison-table td:first-child {
+            text-align: left;
+            font-weight: bold;
+            color: #87CEEB;
+            padding-left: 2rem;
+        }
+
+        .comparison-table .check {
+            color: #7FFF00;
+            font-size: 1.5rem;
+        }
+
+        .comparison-table .cross {
+            color: #FF6B6B;
+            font-size: 1.5rem;
+        }
+
+        /* ===== FIGURE CITATIONS ===== */
+        .figure-citation {
+            text-align: left;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            color: #87CEEB;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .figure-citation strong {
+            color: #00CED1;
+            font-style: normal;
+        }
+
+        .figure-number {
+            font-weight: bold;
+            color: #7FFF00;
         }
 
         /* ===== CONTACT SECTION ===== */
@@ -834,6 +1190,7 @@
             <li><a href="#about">ABOUT</a></li>
             <li><a href="#opportunity">OPPORTUNITY</a></li>
             <li><a href="#how-it-works">HOW IT WORKS</a></li>
+            <li><a href="#pricing">PLANS</a></li>
             <li><a href="#video">VIDEO</a></li>
             <li><a href="#team">TEAM</a></li>
             <li><a href="#contact">CONTACT</a></li>
@@ -986,6 +1343,10 @@
         <h2 class="section-title">HOW VENTPILOT WORKS</h2>
         
         <div class="diagram-container fade-in">
+            <p class="figure-citation">
+                <span class="figure-number">Figure 1:</span> <strong>VentPilot Intelligent Climate Control System.</strong><br>
+                > Image generated using ChatGPT (OpenAI, 2026). This visual conceptually illustrates the smart temperature control system's ability to monitor and adjust climate zones throughout a home.
+            </p>
             <img src="ChatGPT Image Jan 1, 2026, 12_19_01 AM.png" alt="VentPilot Smart Temperature Control System">
             <p class="diagram-caption">
                 <strong>Intelligent Climate Control:</strong> VentPilot's advanced sensor network continuously monitors 
@@ -1017,6 +1378,207 @@
                     <span class="stat-label">Automated Vent Control</span>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- ===== PRICING/SUBSCRIPTION PLANS SECTION ===== -->
+    <section id="pricing">
+        <h2 class="section-title">CHOOSE YOUR COMFORT LEVEL</h2>
+        <div class="pricing-intro">
+            <h3>Stop Fighting Your Thermostat. Start Flying with VentPilot.</h3>
+            <p>Select the plan that perfectly matches your home's needs and your comfort goals.</p>
+        </div>
+
+        <div class="pricing-grid">
+            <!-- PLAN 1: THE INSIGHT KIT -->
+            <div class="pricing-card fade-in">
+                <div class="plan-header">
+                    <h3 class="plan-name">PLAN 1: THE INSIGHT KIT</h3>
+                    <p class="plan-tagline">The "I just want to see what's wrong" plan.</p>
+                    <p class="plan-description">
+                        Perfect for apartments and budget-conscious homeowners who want to identify energy leaks without installing new hardware.
+                    </p>
+                </div>
+
+                <div class="plan-price">
+                    $0 <span class="period">/ Free</span>
+                    <div style="font-size: 1rem; color: #ADD8E6; margin-top: 0.5rem;">Just pay for the sensor</div>
+                </div>
+
+                <div class="plan-details">
+                    <div class="plan-section">
+                        <h4>What You Get:</h4>
+                        <p>1 × VentPilot Room Sensor (Bluetooth)</p>
+                    </div>
+
+                    <div class="plan-section">
+                        <h4>How It Works:</h4>
+                        <p>Stick the sensor in your "problem room." It syncs directly to your phone whenever you're nearby.</p>
+                    </div>
+
+                    <div class="plan-section">
+                        <h4>Key Features:</h4>
+                        <ul>
+                            <li><strong>24/7 Thermal Tracking:</strong> See exactly when and why your rooms get too hot or cold.</li>
+                            <li><strong>AI Smart-Tips:</strong> Receive custom "Manual Fix" notifications (e.g., "Close the kitchen vent 50% to warm up the nursery").</li>
+                            <li><strong>Energy Audit:</strong> Monthly reports showing how much you could save by upgrading.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <a href="#contact" class="plan-cta">GET STARTED FREE</a>
+            </div>
+
+            <!-- PLAN 2: THE ADAPTIVE HOME (MOST POPULAR) -->
+            <div class="pricing-card popular fade-in">
+                <div class="popular-badge">MOST POPULAR</div>
+                <div class="plan-header">
+                    <h3 class="plan-name">PLAN 2: THE ADAPTIVE HOME</h3>
+                    <p class="plan-tagline">The "Set it and forget it" plan.</p>
+                    <p class="plan-description">
+                        Designed for residential homes and small offices (up to 15 rooms) looking for total comfort and automatic savings.
+                    </p>
+                </div>
+
+                <div class="plan-price">
+                    $14.99 <span class="period">/ month</span>
+                    <div style="font-size: 1rem; color: #ADD8E6; margin-top: 0.5rem;">+ Hardware & Install</div>
+                </div>
+
+                <div class="plan-details">
+                    <div class="plan-section">
+                        <h4>What You Get:</h4>
+                        <p>The VentPilot Hub + Smart Vents + Room Sensors</p>
+                    </div>
+
+                    <div class="plan-section">
+                        <h4>How It Works:</h4>
+                        <p>The Hub plugs into your HVAC "motherboard" and talks to your new Smart Vents to move air where you need it.</p>
+                    </div>
+
+                    <div class="plan-section">
+                        <h4>Key Features:</h4>
+                        <ul>
+                            <li><strong>Auto-Balancing:</strong> Vents open and close on their own to keep every room at your perfect temperature.</li>
+                            <li><strong>Smart Thermostat Bridge:</strong> Works with your existing Nest, Ecobee, or "dumb" thermostat.</li>
+                            <li><strong>Professional Setup:</strong> We send a pro to wire the Hub and ensure your system is safe.</li>
+                            <li><strong>Remote Control:</strong> Adjust your whole house from anywhere in the world.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <a href="#contact" class="plan-cta">START SAVING NOW</a>
+            </div>
+
+            <!-- PLAN 3: THE ENTERPRISE ECOSYSTEM -->
+            <div class="pricing-card fade-in">
+                <div class="plan-header">
+                    <h3 class="plan-name">PLAN 3: THE ENTERPRISE ECOSYSTEM</h3>
+                    <p class="plan-tagline">The "Total Building Intelligence" plan.</p>
+                    <p class="plan-description">
+                        The only solution for Hospitals, Large Offices, and Schools. Maximum efficiency meets industrial-grade safety.
+                    </p>
+                </div>
+
+                <div class="plan-price">
+                    $29.99 <span class="period">/ month per zone</span>
+                    <div style="font-size: 1rem; color: #ADD8E6; margin-top: 0.5rem;">+ Custom Installation</div>
+                </div>
+
+                <div class="plan-details">
+                    <div class="plan-section">
+                        <h4>What You Get:</h4>
+                        <p>Enterprise Hub + Industrial Vents + Occupancy & CO₂ Sensors</p>
+                    </div>
+
+                    <div class="plan-section">
+                        <h4>How It Works:</h4>
+                        <p>The Hub uses high-power LoRaWAN signals to control massive buildings and plugs directly into the building's main computer (BMS).</p>
+                    </div>
+
+                    <div class="plan-section">
+                        <h4>Key Features:</h4>
+                        <ul>
+                            <li><strong>Predictive AI Pilot:</strong> Our AI checks the weather and "pre-cools" the building before the sun hits, saving thousands in peak energy costs.</li>
+                            <li><strong>Pathogen Flush:</strong> Sensors detect high CO₂ or germs and automatically blast fresh air into occupied hospital wards.</li>
+                            <li><strong>Air Steering:</strong> Why cool an empty wing? The AI steers 90% of the air only to rooms where people are actually working.</li>
+                            <li><strong>Predictive Maintenance:</strong> The Hub "listens" to your HVAC motor and calls a tech before the system breaks.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <a href="#contact" class="plan-cta">REQUEST QUOTE</a>
+            </div>
+        </div>
+
+        <!-- COMPARISON CHART -->
+        <div class="comparison-section fade-in">
+            <h3 class="comparison-title">Which Plan Is Right For Me?</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Insight</th>
+                        <th>Adaptive</th>
+                        <th>Enterprise</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Manual Air Balancing Tips</td>
+                        <td><span class="check">✅</span></td>
+                        <td><span class="check">✅</span></td>
+                        <td><span class="check">✅</span></td>
+                    </tr>
+                    <tr>
+                        <td>Automatic Vent Control</td>
+                        <td><span class="cross">❌</span></td>
+                        <td><span class="check">✅</span></td>
+                        <td><span class="check">✅</span></td>
+                    </tr>
+                    <tr>
+                        <td>Works with Large Offices/Hospitals</td>
+                        <td><span class="cross">❌</span></td>
+                        <td><span class="cross">❌</span></td>
+                        <td><span class="check">✅</span></td>
+                    </tr>
+                    <tr>
+                        <td>AI Predictive Maintenance</td>
+                        <td><span class="cross">❌</span></td>
+                        <td><span class="cross">❌</span></td>
+                        <td><span class="check">✅</span></td>
+                    </tr>
+                    <tr>
+                        <td>Infection/CO₂ Control</td>
+                        <td><span class="cross">❌</span></td>
+                        <td><span class="cross">❌</span></td>
+                        <td><span class="check">✅</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ADDITIONAL HARDWARE MOCKUP IMAGES -->
+        <div class="diagram-container smaller-diagram fade-in" style="margin-top: 4rem;">
+            <p class="figure-citation">
+                <span class="figure-number">Figure 2:</span> <strong>VentPilot Snap-On Sensor Mockup.</strong><br>
+                > Image generated using Gemini 3 Flash (Google, 2026). This visual is a conceptual 3D render created to illustrate the hardware design and snap-on functionality of the VentPilot Tier 1 sensor.
+            </p>
+            <img src="Screenshot 2026-01-01 170339.png" alt="VentPilot Snap-On Sensor Mockup">
+            <p class="diagram-caption">
+                <strong>Tier 1 Sensor Design:</strong> The snap-on sensor features a sleek, minimalist design that easily attaches to any room surface. Its compact form factor houses advanced thermal tracking technology, providing 24/7 temperature monitoring and AI-powered insights for manual climate adjustments.
+            </p>
+        </div>
+
+        <div class="diagram-container smaller-diagram fade-in">
+            <p class="figure-citation">
+                <span class="figure-number">Figure 3:</span> <strong>VentPilot Universal Hub (Tier 2/3) Mockup.</strong><br>
+                > Image generated using Gemini 3 Flash (Google, 2026). This conceptual 3D render illustrates the industrial-grade, screenless gateway design, featuring a durable metal chassis and the internal processing unit for the AI steering logic.
+            </p>
+            <img src="image.png" alt="VentPilot Universal Hub Mockup">
+            <p class="diagram-caption">
+                <strong>Enterprise Hub Architecture:</strong> The Universal Hub serves as the central nervous system for VentPilot's Tier 2 and Tier 3 systems. Built with industrial-grade components, it features a robust metal chassis that houses powerful AI processing capabilities, enabling predictive maintenance, air steering logic, and seamless integration with building management systems.
+            </p>
         </div>
     </section>
 
