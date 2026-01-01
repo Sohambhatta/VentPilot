@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VentPilot - Smart Climate Control Innovation</title>
+    <link rel="icon" type="image/png" href="1767229562570-Screenshot 2025-12-31 200427-new.png">
+    <style>
+        /* ===== GLOBAL STYLES & RESET ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            background: linear-gradient(135deg, #001f3f 0%, #003366 25%, #004d7a 50%, #0066a1 75%, #0080c8 100%);
+            background-attachment: fixed;
+            color: #87CEEB;
+            overflow-x: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            position: relative;
+        }
+
+        /* ===== ANIMATED BACKGROUND ELEMENTS ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 206, 209, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(127, 255, 0, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(135, 206, 235, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 40%, rgba(0, 128, 200, 0.08) 0%, transparent 50%);
+            z-index: -1;
+            animation: backgroundShift 20s ease-in-out infinite;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 100px,
+                    rgba(0, 206, 209, 0.02) 100px,
+                    rgba(0, 206, 209, 0.02) 200px
+                );
+            z-index: -1;
+            animation: diagonalMove 30s linear infinite;
+        }
+
+        @keyframes diagonalMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* ===== NAVIGATION BAR ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 31, 63, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 128, 200, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        nav:hover {
+            box-shadow: 0 6px 30px rgba(0, 128, 200, 0.5);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            height: 50px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .brand-name {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #87CEEB, #00CED1, #7FFF00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #87CEEB;
+            text-decoration: none;
+            font-size: 1.1rem;
+            position: relative;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00CED1, #7FFF00);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #7FFF00;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated background particles */
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(135, 206, 235, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveBackground 20s linear infinite;
+        }
+
+        @keyframes moveBackground {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #87CEEB, #00CED1, #7FFF00, #FFB347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInDown 1s ease-out;
+            text-shadow: 0 0 30px rgba(135, 206, 235, 0.5);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #ADD8E6;
+            animation: fadeInUp 1s ease-out 0.3s both;
+            line-height: 1.6;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            font-size: 1.3rem;
+            color: #001f3f;
+            background: linear-gradient(135deg, #87CEEB, #00CED1);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            font-family: 'Impact', sans-serif;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 206, 209, 0.4);
+            animation: fadeInUp 1s ease-out 0.6s both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 206, 209, 0.6);
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        /* ===== SECTION CONTAINER STYLES ===== */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(90deg, #87CEEB, #00CED1, #7FFF00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideIn 0.8s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ===== ABOUT SECTION ===== */
+        #about {
+            background: rgba(0, 31, 63, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 4rem;
+            box-shadow: 0 10px 40px rgba(0, 128, 200, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        #about:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(0, 128, 200, 0.5);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #ADD8E6;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 1.2rem;
+            margin: 1rem 0;
+            background: rgba(0, 128, 200, 0.2);
+            border-left: 4px solid #00CED1;
+            border-radius: 8px;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            font-size: 1.15rem;
+            letter-spacing: 0.5px;
+            overflow: hidden;
+        }
+
+        .feature-list li strong {
+            font-size: 1.25rem;
+            letter-spacing: 1px;
+        }
+
+        .feature-list li:hover {
+            background: rgba(0, 128, 200, 0.4);
+            transform: translateX(10px);
+            border-left-color: #7FFF00;
+            padding-bottom: 1.2rem;
+        }
+
+        /* Expandable feature details */
+        .feature-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease, margin 0.4s ease;
+            background: rgba(0, 206, 209, 0.1);
+            border-radius: 6px;
+            margin-top: 0;
+            padding: 0 1rem;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #B0E0E6;
+        }
+
+        .feature-list li:hover .feature-details {
+            max-height: 300px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        /* ===== BENEFITS SECTION ===== */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            justify-items: center;
+        }
+
+        .benefit-card {
+            background: rgba(0, 31, 63, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 206, 209, 0.1), transparent);
+            transition: transform 0.6s ease;
+            transform: scale(0);
+        }
+
+        .benefit-card:hover::before {
+            transform: scale(1);
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            border-color: #00CED1;
+            box-shadow: 0 15px 40px rgba(0, 206, 209, 0.4);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.7rem;
+            margin-bottom: 1rem;
+            color: #7FFF00;
+            font-family: 'Arial Black', sans-serif;
+            letter-spacing: 1.5px;
+            font-weight: 900;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            text-align: center;
+            padding: 0 0.5rem;
+        }
+
+        .benefit-card p {
+            font-size: 1.1rem;
+            color: #ADD8E6;
+            line-height: 1.6;
+        }
+
+        /* ===== VIDEO SECTION ===== */
+        #video {
+            text-align: center;
+        }
+
+        .video-container {
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 50px rgba(0, 206, 209, 0.3);
+            transition: all 0.3s ease;
+            background: rgba(0, 31, 63, 0.8);
+            padding: 2rem;
+        }
+
+        .video-container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 60px rgba(0, 206, 209, 0.5);
+        }
+
+        .video-placeholder {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: rgba(0, 128, 200, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            border: 2px dashed #00CED1;
+            color: #ADD8E6;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .video-placeholder:hover {
+            background: rgba(0, 128, 200, 0.4);
+            border-color: #7FFF00;
+        }
+
+        /* ===== TEAM SECTION ===== */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+            justify-items: center;
+        }
+
+        .team-member {
+            background: rgba(0, 31, 63, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+            width: 100%;
+            max-width: 380px;
+            min-height: 450px;
+        }
+
+        .team-member::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 206, 209, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .team-member:hover::after {
+            left: 100%;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px) scale(1.05);
+            border-color: #00CED1;
+            box-shadow: 0 15px 40px rgba(0, 206, 209, 0.4);
+        }
+
+        .member-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, #003366, #0080c8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #87CEEB;
+            border: 4px solid #00CED1;
+            transition: all 0.3s ease;
+        }
+
+        .team-member:hover .member-photo {
+            transform: rotate(360deg);
+            border-color: #7FFF00;
+        }
+
+        .team-member h3 {
+            font-size: 1.7rem;
+            margin-bottom: 0.5rem;
+            color: #7FFF00;
+            font-family: 'Arial Black', sans-serif;
+            letter-spacing: 2px;
+            font-weight: 900;
+        }
+
+        .team-member .role {
+            font-size: 1.15rem;
+            color: #00CED1;
+            margin-bottom: 1.2rem;
+            font-style: italic;
+        }
+
+        .team-member p {
+            font-size: 1.05rem;
+            color: #ADD8E6;
+            line-height: 1.7;
+        }
+
+        /* ===== CONTACT SECTION ===== */
+        #contact {
+            background: rgba(0, 31, 63, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 4rem;
+            text-align: center;
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-content p {
+            font-size: 1.2rem;
+            color: #ADD8E6;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .contact-email {
+            display: inline-block;
+            font-size: 1.4rem;
+            color: #00CED1;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border: 2px solid #00CED1;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-email:hover {
+            background: #00CED1;
+            color: #001f3f;
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(0, 206, 209, 0.5);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: rgba(0, 15, 31, 0.9);
+            padding: 2rem;
+            text-align: center;
+            color: #87CEEB;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            font-size: 1rem;
+            margin: 0.5rem 0;
+        }
+
+        /* ===== SCROLL ANIMATIONS ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .brand-name {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== NAVIGATION BAR ===== -->
+    <nav>
+        <div class="logo-container">
+            <img src="1767229562570-Screenshot 2025-12-31 200427-new.png" alt="VentPilot Logo" class="logo">
+            <span class="brand-name">VENTPILOT</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home">HOME</a></li>
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#benefits">BENEFITS</a></li>
+            <li><a href="#video">VIDEO</a></li>
+            <li><a href="#team">TEAM</a></li>
+            <li><a href="#contact">CONTACT</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>REVOLUTIONIZING HOME CLIMATE CONTROL</h1>
+            <p>
+                Smart temperature sensing technology that identifies and targets heat loss sources,
+                delivering efficient, eco-friendly climate control for your home.
+            </p>
+            <a href="#about" class="cta-button">DISCOVER MORE</a>
+        </div>
+    </section>
+
+    <!-- ===== ABOUT SECTION ===== -->
+    <section id="about">
+        <h2 class="section-title">WHAT IS VENTPILOT?</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>
+                    VentPilot is an innovative climate control system that uses advanced sensors to detect
+                    temperature discrepancies throughout your home. By identifying the exact sources of
+                    heat loss—whether it's a poorly insulated window, an open door, or a drafty area—our
+                    system intelligently targets these specific locations for heating or cooling.
+                </p>
+                <p>
+                    Instead of wastefully heating or cooling your entire home, VentPilot focuses energy
+                    precisely where it's needed, resulting in significant cost savings, reduced energy
+                    consumption, and a more sustainable approach to home comfort.
+                </p>
+            </div>
+            <div class="feature-highlight">
+                <ul class="feature-list">
+                    <li>
+                        <strong>Smart Detection:</strong> Identifies temperature discrepancies in real-time
+                        <div class="feature-details">
+                            Our advanced sensor network continuously monitors temperature variations across your home, 
+                            using machine learning algorithms to detect even the slightest temperature differences. 
+                            The system pinpoints exact locations of heat loss or gain with precision accuracy, 
+                            allowing for immediate response and targeted climate control.
+                        </div>
+                    </li>
+                    <li>
+                        <strong>Targeted Climate Control:</strong> Focuses heating/cooling where needed
+                        <div class="feature-details">
+                            Instead of treating your entire home uniformly, VentPilot intelligently directs HVAC 
+                            resources to specific zones that need attention. This zone-based approach ensures that 
+                            problem areas receive adequate heating or cooling while avoiding energy waste in 
+                            already-comfortable spaces.
+                        </div>
+                    </li>
+                    <li>
+                        <strong>Energy Efficient:</strong> Reduces unnecessary energy consumption
+                        <div class="feature-details">
+                            By focusing energy only where needed, VentPilot eliminates the wasteful practice of 
+                            conditioning spaces that don't require it. Our smart algorithms optimize HVAC runtime, 
+                            reducing overall energy consumption by up to 40% compared to traditional systems.
+                        </div>
+                    </li>
+                    <li>
+                        <strong>Cost Effective:</strong> Lower utility bills through optimized operation
+                        <div class="feature-details">
+                            Reduced energy consumption directly translates to lower utility bills. VentPilot users 
+                            typically see significant cost savings within the first month, with the system paying 
+                            for itself through reduced energy expenses over time.
+                        </div>
+                    </li>
+                    <li>
+                        <strong>Eco-Friendly:</strong> Minimizes environmental impact
+                        <div class="feature-details">
+                            By reducing unnecessary energy usage, VentPilot significantly lowers your carbon footprint. 
+                            Every kilowatt-hour saved means less strain on power grids and reduced greenhouse gas 
+                            emissions, contributing to a more sustainable future for our planet.
+                        </div>
+                    </li>
+                    <li>
+                        <strong>Automated System:</strong> Set it and forget it convenience
+                        <div class="feature-details">
+                            VentPilot operates autonomously, requiring no manual intervention. Once installed and 
+                            configured, the system continuously monitors, analyzes, and optimizes your home's climate 
+                            control, adapting to changing conditions and learning your preferences over time.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== BENEFITS SECTION ===== -->
+    <section id="benefits">
+        <h2 class="section-title">WHY CHOOSE VENTPILOT?</h2>
+        <div class="benefits-grid">
+            <div class="benefit-card fade-in">
+                <span class="benefit-icon">💰</span>
+                <h3>SAVE MONEY</h3>
+                <p>
+                    Reduce your heating and cooling costs by up to 40% by eliminating wasted energy.
+                    VentPilot's targeted approach means you only pay for the climate control you actually need.
+                </p>
+            </div>
+            <div class="benefit-card fade-in">
+                <span class="benefit-icon">⚡</span>
+                <h3>ENERGY EFFICIENT</h3>
+                <p>
+                    Our smart system optimizes energy usage by focusing on problem areas rather than
+                    treating your entire home uniformly, significantly reducing overall electricity consumption.
+                </p>
+            </div>
+            <div class="benefit-card fade-in">
+                <span class="benefit-icon">🌍</span>
+                <h3>ENVIRONMENTALLY FRIENDLY</h3>
+                <p>
+                    By minimizing energy waste, VentPilot helps reduce your carbon footprint and contributes
+                    to a more sustainable future. Every home using VentPilot makes a positive environmental impact.
+                </p>
+            </div>
+            <div class="benefit-card fade-in">
+                <span class="benefit-icon">🎯</span>
+                <h3>PRECISION CONTROL</h3>
+                <p>
+                    Advanced sensors and algorithms ensure that every area of your home receives exactly
+                    the right amount of heating or cooling for optimal comfort and efficiency.
+                </p>
+            </div>
+            <div class="benefit-card fade-in">
+                <span class="benefit-icon">🏠</span>
+                <h3>ENHANCED COMFORT</h3>
+                <p>
+                    Say goodbye to cold spots and overheated rooms. VentPilot maintains consistent,
+                    comfortable temperatures throughout your entire home by addressing the root causes.
+                </p>
+            </div>
+            <div class="benefit-card fade-in">
+                <span class="benefit-icon">🔧</span>
+                <h3>EASY INSTALLATION</h3>
+                <p>
+                    VentPilot integrates seamlessly with your existing HVAC system. Our straightforward
+                    installation process means you can start saving energy and money in no time.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== VIDEO SECTION ===== -->
+    <section id="video">
+        <h2 class="section-title">SEE VENTPILOT IN ACTION</h2>
+        <div class="video-container">
+            <!-- Replace the placeholder div below with your actual YouTube embed code -->
+            <div class="video-placeholder">
+                <p>YouTube Video Embed - Insert your video link here<br>
+                   (Replace this div with iframe embed code)</p>
+            </div>
+            <!-- Example of how to embed YouTube video:
+            <iframe width="100%" height="500" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" 
+                    frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; 
+                    gyroscope; picture-in-picture" allowfullscreen></iframe>
+            -->
+        </div>
+    </section>
+
+    <!-- ===== TEAM SECTION ===== -->
+    <section id="team">
+        <h2 class="section-title">MEET THE VENTPILOT TEAM</h2>
+        <div class="team-grid">
+            <div class="team-member fade-in">
+                <div class="member-photo">👤</div>
+                <h3>TEAM MEMBER 1</h3>
+                <p class="role">Chief Executive Officer (CEO)</p>
+                <p>
+                    [Brief bio about this team member's background, skills, and contributions to VentPilot.
+                    Highlight their leadership and vision for the company.]
+                </p>
+            </div>
+            <div class="team-member fade-in">
+                <div class="member-photo">👤</div>
+                <h3>TEAM MEMBER 2</h3>
+                <p class="role">Chief Technology Officer (CTO)</p>
+                <p>
+                    [Brief bio about this team member's technical expertise, engineering skills, and role
+                    in developing VentPilot's innovative technology.]
+                </p>
+            </div>
+            <div class="team-member fade-in">
+                <div class="member-photo">👤</div>
+                <h3>TEAM MEMBER 3</h3>
+                <p class="role">Chief Operations Officer (COO)</p>
+                <p>
+                    [Brief bio about this team member's operational expertise and their role in managing
+                    day-to-day operations and product development.]
+                </p>
+            </div>
+            <div class="team-member fade-in">
+                <div class="member-photo">👤</div>
+                <h3>TEAM MEMBER 4</h3>
+                <p class="role">Chief Marketing Officer (CMO)</p>
+                <p>
+                    [Brief bio about this team member's marketing skills and their role in promoting
+                    VentPilot and reaching potential customers and investors.]
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT SECTION ===== -->
+    <section id="contact">
+        <h2 class="section-title">GET IN TOUCH</h2>
+        <div class="contact-content">
+            <p>
+                Interested in learning more about VentPilot or discussing partnership opportunities?
+                We'd love to hear from you!
+            </p>
+            <a href="mailto:contact@ventpilot.com" class="contact-email">contact@ventpilot.com</a>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <p>&copy; 2025 VentPilot. All rights reserved.</p>
+        <p>Innovating for a more sustainable future.</p>
+    </footer>
+
+    <!-- ===== JAVASCRIPT FOR ANIMATIONS AND INTERACTIVITY ===== -->
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with fade-in class
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Navbar background change on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(0, 15, 31, 0.98)';
+            } else {
+                nav.style.background = 'rgba(0, 31, 63, 0.95)';
+            }
+        });
+
+        // Add hover effect sound feedback (optional - can be removed if not needed)
+        document.querySelectorAll('.benefit-card, .team-member, .cta-button').forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+            });
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const hero = document.querySelector('.hero');
+            const scrolled = window.pageYOffset;
+            hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+        });
+    </script>
+</body>
+</html>
