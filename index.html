@@ -585,6 +585,132 @@
             line-height: 1.7;
         }
 
+        /* ===== DIAGRAM/IMAGE SHOWCASE STYLES ===== */
+        .diagram-container {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: rgba(0, 31, 63, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 2px solid rgba(0, 206, 209, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .diagram-container:hover {
+            transform: translateY(-5px);
+            border-color: #00CED1;
+            box-shadow: 0 10px 40px rgba(0, 206, 209, 0.4);
+        }
+
+        .diagram-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .diagram-caption {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            color: #ADD8E6;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+        }
+
+        /* ===== OPPORTUNITY SECTION ===== */
+        .opportunity-content {
+            background: rgba(0, 31, 63, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 2rem;
+        }
+
+        .opportunity-content p {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: #ADD8E6;
+            margin-bottom: 1.5rem;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-box {
+            background: rgba(0, 128, 200, 0.2);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border-left: 4px solid #00CED1;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            background: rgba(0, 128, 200, 0.4);
+            border-left-color: #7FFF00;
+            transform: translateX(5px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            color: #7FFF00;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #ADD8E6;
+        }
+
+        /* ===== TEAM GRID ADJUSTMENT FOR 3-2 LAYOUT ===== */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            margin-top: 3rem;
+            justify-items: center;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .team-member:nth-child(4),
+        .team-member:nth-child(5) {
+            grid-column: span 1;
+        }
+
+        .team-grid::after {
+            content: '';
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Wrapper for last two members to center them */
+        .team-row-2 {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(2, 380px);
+            gap: 2.5rem;
+            justify-content: center;
+            margin-top: 0;
+        }
+
+        .team-member p {
+            font-size: 1.05rem;
+            color: #ADD8E6;
+            line-height: 1.7;
+        }
+
         /* ===== CONTACT SECTION ===== */
         #contact {
             background: rgba(0, 31, 63, 0.6);
@@ -677,6 +803,22 @@
             .brand-name {
                 font-size: 1.5rem;
             }
+
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .team-row-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .diagram-container {
+                padding: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -690,7 +832,8 @@
         <ul class="nav-links">
             <li><a href="#home">HOME</a></li>
             <li><a href="#about">ABOUT</a></li>
-            <li><a href="#benefits">BENEFITS</a></li>
+            <li><a href="#opportunity">OPPORTUNITY</a></li>
+            <li><a href="#how-it-works">HOW IT WORKS</a></li>
             <li><a href="#video">VIDEO</a></li>
             <li><a href="#team">TEAM</a></li>
             <li><a href="#contact">CONTACT</a></li>
@@ -702,8 +845,9 @@
         <div class="hero-content">
             <h1>REVOLUTIONIZING HOME CLIMATE CONTROL</h1>
             <p>
-                Smart temperature sensing technology that identifies and targets heat loss sources,
-                delivering efficient, eco-friendly climate control for your home.
+                VentPilot is an intelligent home climate control system that eliminates energy waste by using 
+                advanced sensors and machine learning to detect real-time temperature discrepancies and target 
+                heating or cooling exactly where it is needed.
             </p>
             <a href="#about" class="cta-button">DISCOVER MORE</a>
         </div>
@@ -715,15 +859,16 @@
         <div class="about-content">
             <div class="about-text">
                 <p>
-                    VentPilot is an innovative climate control system that uses advanced sensors to detect
-                    temperature discrepancies throughout your home. By identifying the exact sources of
-                    heat loss—whether it's a poorly insulated window, an open door, or a drafty area—our
-                    system intelligently targets these specific locations for heating or cooling.
+                    VentPilot is an intelligent home climate control system designed to eliminate energy waste 
+                    caused by uneven heating and cooling. Traditional HVAC systems treat an entire home uniformly, 
+                    even when heat loss often comes from specific problem areas like poorly insulated windows, 
+                    open doors, or drafty zones.
                 </p>
                 <p>
-                    Instead of wastefully heating or cooling your entire home, VentPilot focuses energy
-                    precisely where it's needed, resulting in significant cost savings, reduced energy
-                    consumption, and a more sustainable approach to home comfort.
+                    VentPilot solves this by using a network of advanced sensors and machine learning to detect 
+                    real-time temperature discrepancies and target heating or cooling exactly where it is needed. 
+                    By optimizing HVAC usage, VentPilot can reduce energy consumption by up to 40%, leading to 
+                    immediate cost savings and long-term sustainability benefits.
                 </p>
             </div>
             <div class="feature-highlight">
@@ -755,11 +900,11 @@
                         </div>
                     </li>
                     <li>
-                        <strong>Cost Effective:</strong> Lower utility bills through optimized operation
+                        <strong>Retrofit Compatible:</strong> Works with existing HVAC systems
                         <div class="feature-details">
-                            Reduced energy consumption directly translates to lower utility bills. VentPilot users 
-                            typically see significant cost savings within the first month, with the system paying 
-                            for itself through reduced energy expenses over time.
+                            VentPilot integrates seamlessly with your current heating and cooling infrastructure. 
+                            No need for expensive system replacements—our solution enhances what you already have, 
+                            making it a cost-effective upgrade for any home.
                         </div>
                     </li>
                     <li>
@@ -783,57 +928,94 @@
         </div>
     </section>
 
-    <!-- ===== BENEFITS SECTION ===== -->
-    <section id="benefits">
-        <h2 class="section-title">WHY CHOOSE VENTPILOT?</h2>
-        <div class="benefits-grid">
-            <div class="benefit-card fade-in">
-                <span class="benefit-icon">💰</span>
-                <h3>SAVE MONEY</h3>
-                <p>
-                    Reduce your heating and cooling costs by up to 40% by eliminating wasted energy.
-                    VentPilot's targeted approach means you only pay for the climate control you actually need.
-                </p>
+    <!-- ===== OPPORTUNITY SECTION ===== -->
+    <section id="opportunity">
+        <h2 class="section-title">THE OPPORTUNITY</h2>
+        <div class="opportunity-content">
+            <p>
+                Heating and cooling systems account for a significant portion of household energy consumption, 
+                yet most homes rely on outdated HVAC systems that operate inefficiently. A major pain point is 
+                that traditional systems heat or cool entire homes uniformly, even though temperature loss is 
+                rarely evenly distributed. Heat often escapes through poorly insulated windows, doors, or specific 
+                rooms, causing homeowners to waste energy and money compensating for localized inefficiencies.
+            </p>
+            <p>
+                This problem is becoming increasingly urgent as energy prices continue to rise and households face 
+                growing pressure to reduce costs while maintaining comfort. Additionally, inefficient energy use 
+                contributes significantly to carbon emissions, placing strain on power grids and accelerating 
+                climate change. While smart thermostats exist, they primarily regulate temperature based on time 
+                or occupancy, not on real-time, room-specific temperature discrepancies.
+            </p>
+            <p>
+                VentPilot addresses this gap by offering precise, zone-based climate control. Its sensor network 
+                identifies exact locations of heat loss or gain and directs heating or cooling only to those areas. 
+                This targeted approach reduces unnecessary HVAC runtime, improves comfort, and lowers utility bills 
+                without requiring homeowners to replace their entire HVAC system.
+            </p>
+            <p>
+                The opportunity lies in a large and growing market of homeowners, landlords, and property managers 
+                seeking affordable energy-efficiency solutions. Governments and utilities are also increasingly 
+                offering incentives for energy-saving technologies, further expanding adoption potential. VentPilot 
+                positions itself as a practical, scalable innovation that not only saves money but also supports 
+                global sustainability goals, making it a compelling solution in today's energy-conscious market.
+            </p>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-number">40%</span>
+                    <span class="stat-label">Energy Reduction</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">$800+</span>
+                    <span class="stat-label">Annual Savings</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">85M</span>
+                    <span class="stat-label">US Homes Addressable</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">2-3 Years</span>
+                    <span class="stat-label">ROI Period</span>
+                </div>
             </div>
-            <div class="benefit-card fade-in">
-                <span class="benefit-icon">⚡</span>
-                <h3>ENERGY EFFICIENT</h3>
-                <p>
-                    Our smart system optimizes energy usage by focusing on problem areas rather than
-                    treating your entire home uniformly, significantly reducing overall electricity consumption.
-                </p>
-            </div>
-            <div class="benefit-card fade-in">
-                <span class="benefit-icon">🌍</span>
-                <h3 style="font-size: 1.135rem; letter-spacing: 0.5px;">ENVIRONMENTALLY FRIENDLY</h3>
-                <p>
-                    By minimizing energy waste, VentPilot helps reduce your carbon footprint and contributes
-                    to a more sustainable future. Every home using VentPilot makes a positive environmental impact.
-                </p>
-            </div>
-            <div class="benefit-card fade-in">
-                <span class="benefit-icon">🎯</span>
-                <h3>PRECISION CONTROL</h3>
-                <p>
-                    Advanced sensors and algorithms ensure that every area of your home receives exactly
-                    the right amount of heating or cooling for optimal comfort and efficiency.
-                </p>
-            </div>
-            <div class="benefit-card fade-in">
-                <span class="benefit-icon">🏠</span>
-                <h3>ENHANCED COMFORT</h3>
-                <p>
-                    Say goodbye to cold spots and overheated rooms. VentPilot maintains consistent,
-                    comfortable temperatures throughout your entire home by addressing the root causes.
-                </p>
-            </div>
-            <div class="benefit-card fade-in">
-                <span class="benefit-icon">🔧</span>
-                <h3 style="font-size: 1.5rem; letter-spacing: 1px;">EASY INSTALLATION</h3>
-                <p>
-                    VentPilot integrates seamlessly with your existing HVAC system. Our straightforward
-                    installation process means you can start saving energy and money in no time.
-                </p>
+        </div>
+    </section>
+
+    <!-- ===== HOW IT WORKS SECTION WITH DIAGRAMS ===== -->
+    <section id="how-it-works">
+        <h2 class="section-title">HOW VENTPILOT WORKS</h2>
+        
+        <div class="diagram-container fade-in">
+            <img src="ChatGPT Image Jan 1, 2026, 12_19_01 AM.png" alt="VentPilot Smart Temperature Control System">
+            <p class="diagram-caption">
+                <strong>Intelligent Climate Control:</strong> VentPilot's advanced sensor network continuously monitors 
+                temperature variations throughout your home. When temperature discrepancies are detected, our machine 
+                learning algorithms automatically adjust airflow to target specific zones, ensuring problem areas receive 
+                adequate heating or cooling while minimizing energy waste in already-comfortable spaces.
+            </p>
+        </div>
+
+        <div class="opportunity-content" style="margin-top: 3rem;">
+            <h3 style="font-size: 2rem; color: #00CED1; margin-bottom: 1.5rem; text-align: center;">
+                Key Technologies
+            </h3>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-number">🌡️</span>
+                    <span class="stat-label">Advanced Temperature Sensors</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">🤖</span>
+                    <span class="stat-label">Machine Learning Algorithms</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">📡</span>
+                    <span class="stat-label">Wireless Mesh Network</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">🔄</span>
+                    <span class="stat-label">Automated Vent Control</span>
+                </div>
             </div>
         </div>
     </section>
@@ -858,42 +1040,69 @@
     <!-- ===== TEAM SECTION ===== -->
     <section id="team">
         <h2 class="section-title">MEET THE VENTPILOT TEAM</h2>
+        <p style="text-align: center; font-size: 1.2rem; color: #ADD8E6; margin-bottom: 2rem; max-width: 900px; margin-left: auto; margin-right: auto; font-family: 'Arial', sans-serif;">
+            The VentPilot team formed through a shared interest in engineering, sustainability, and problem-solving. 
+            United by a common frustration with inefficient home climate systems, we bring complementary strengths 
+            in engineering, computer science, applied physics, and entrepreneurship to create a solution that is 
+            both technically robust and commercially viable.
+        </p>
         <div class="team-grid">
             <div class="team-member fade-in">
-                <div class="member-photo">👤</div>
-                <h3>TEAM MEMBER 1</h3>
-                <p class="role">Chief Executive Officer (CEO)</p>
+                <div class="member-photo">S</div>
+                <h3>SOHAM BHATTACHARYA</h3>
+                <p class="role">Chief Executive Officer & System Architect</p>
                 <p>
-                    [Brief bio about this team member's background, skills, and contributions to VentPilot.
-                    Highlight their leadership and vision for the company.]
+                    Soham leads system design and research, focusing on sensor integration and data analysis. 
+                    With expertise in engineering and product development, he oversees the technical architecture 
+                    of VentPilot's intelligent climate control system, ensuring seamless hardware-software integration 
+                    and optimal performance across diverse home environments.
                 </p>
             </div>
             <div class="team-member fade-in">
-                <div class="member-photo">👤</div>
-                <h3>TEAM MEMBER 2</h3>
-                <p class="role">Chief Technology Officer (CTO)</p>
+                <div class="member-photo">N</div>
+                <h3>NIDHEESH KUMAR</h3>
+                <p class="role">Chief Technology Officer</p>
                 <p>
-                    [Brief bio about this team member's technical expertise, engineering skills, and role
-                    in developing VentPilot's innovative technology.]
+                    Nidheesh oversees software development and machine learning algorithms for smart detection. 
+                    His expertise in artificial intelligence and data science powers VentPilot's ability to learn 
+                    and adapt to home temperature patterns, continuously improving efficiency through advanced 
+                    predictive algorithms and real-time optimization.
                 </p>
             </div>
             <div class="team-member fade-in">
-                <div class="member-photo">👤</div>
-                <h3>TEAM MEMBER 3</h3>
-                <p class="role">Chief Operations Officer (COO)</p>
+                <div class="member-photo">V</div>
+                <h3>VAIBHAV PATEL</h3>
+                <p class="role">Chief Operations Officer</p>
                 <p>
-                    [Brief bio about this team member's operational expertise and their role in managing
-                    day-to-day operations and product development.]
+                    Vaibhav manages hardware prototyping and testing of the vent and sensor network. With strong 
+                    skills in applied physics and mechanical engineering, he ensures VentPilot's physical components 
+                    meet the highest standards of reliability and performance, overseeing manufacturing processes 
+                    and quality assurance protocols.
                 </p>
             </div>
-            <div class="team-member fade-in">
-                <div class="member-photo">👤</div>
-                <h3>TEAM MEMBER 4</h3>
-                <p class="role">Chief Marketing Officer (CMO)</p>
-                <p>
-                    [Brief bio about this team member's marketing skills and their role in promoting
-                    VentPilot and reaching potential customers and investors.]
-                </p>
+            <div class="team-row-2">
+                <div class="team-member fade-in">
+                    <div class="member-photo">S</div>
+                    <h3>SANJAY REDDY</h3>
+                    <p class="role">Chief Financial Officer</p>
+                    <p>
+                        Sanjay handles business strategy, market research, and cost analysis. His entrepreneurial 
+                        mindset and financial acumen guide VentPilot's go-to-market strategy, pricing models, and 
+                        investor relations. He identifies growth opportunities and ensures the business maintains 
+                        strong financial health while scaling operations.
+                    </p>
+                </div>
+                <div class="team-member fade-in">
+                    <div class="member-photo">K</div>
+                    <h3>KUNAL SHARMA</h3>
+                    <p class="role">Chief Marketing Officer</p>
+                    <p>
+                        Kunal leads environmental impact analysis and product presentation. He crafts VentPilot's 
+                        brand narrative, highlighting the environmental and economic benefits of our technology. 
+                        His strategic marketing initiatives target eco-conscious consumers and position VentPilot 
+                        as a leader in sustainable home innovation.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
@@ -903,17 +1112,30 @@
         <h2 class="section-title">GET IN TOUCH</h2>
         <div class="contact-content">
             <p>
-                Interested in learning more about VentPilot or discussing partnership opportunities?
-                We'd love to hear from you!
+                Interested in learning more about VentPilot, discussing partnership opportunities, or exploring 
+                investment possibilities? We'd love to hear from you!
             </p>
-            <a href="mailto:contact@ventpilot.com" class="contact-email">contact@ventpilot.com</a>
+            <p style="margin-top: 1rem; font-size: 1.1rem;">
+                <strong>Target Market:</strong> Homeowners, property managers, and eco-conscious consumers<br>
+                <strong>Business Model:</strong> Direct-to-consumer sales, HVAC partnerships, and retrofitting services<br>
+                <strong>Market Potential:</strong> 85M+ addressable homes in the US alone
+            </p>
+            <div style="margin-top: 2rem;">
+                <a href="mailto:info@ventpilot.com" class="contact-email">info@ventpilot.com</a>
+            </div>
+            <p style="margin-top: 2rem; font-size: 1rem; color: #87CEEB;">
+                VentPilot - Building a sustainable, energy-efficient future, one home at a time.
+            </p>
         </div>
     </section>
 
     <!-- ===== FOOTER ===== -->
     <footer>
-        <p>&copy; 2025 VentPilot. All rights reserved.</p>
-        <p>Innovating for a more sustainable future.</p>
+        <p>&copy; 2026 VentPilot Technologies Inc. All rights reserved.</p>
+        <p>Innovating for a more sustainable, energy-efficient future.</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem; color: #87CEEB;">
+            Patent Pending | Made with passion for sustainability and innovation
+        </p>
     </footer>
 
     <!-- ===== JAVASCRIPT FOR ANIMATIONS AND INTERACTIVITY ===== -->
